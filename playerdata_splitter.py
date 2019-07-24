@@ -10,7 +10,7 @@ import numpy as np
 def playerdata_splitter(n):
         getplayers_query = (r"""SELECT JSON_EXTRACT(`playerdata`,"$.players") FROM `wholedata_722d` WHERE matchid = %s""")
         getplayers_data = (n,)
-        cnx = mysql.connector.connect(user=USER,password=PASSWORD,host=HOST)
+        cnx = mysql.connector.connect(user=USER,password=PASSWORD,host=HOST, auth_plugin='caching_sha2_password')
         cursor = cnx.cursor(buffered=True)
         try:
             cursor.execute("USE dota2_match_datalake")
