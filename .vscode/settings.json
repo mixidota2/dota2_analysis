@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\takumu\\Anaconda3\\python.exe"
+    "python.pythonPath": "C:\\Users\\takumu\\Anaconda3\\envs\\dota2\\python.exe",
+    "python.venvPath": "C:\\Users\\takumu\\Anaconda3\\envs"
 }
