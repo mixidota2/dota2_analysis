@@ -36,7 +36,7 @@ def playerdata_splitter(n):
                                         %(gold_per_min)s,%(xp_per_min)s,%(level)s,%(hero_damage)s,%(hero_healing)s,%(tower_damage)s)"""
                                         .format(TABLE_EACH_PLAYERDATA)
                                         )
-                        cursor.execute(player_query,eachdata)
+                        cursor.executemany(player_query,eachdata)
                 cnx.commit()
                 cursor.close()
                 cnx.close()
@@ -58,5 +58,6 @@ def match_id_getter():
     match_df_arr = np.array(match_df['matchid'],dtype=np.int64)
     return map(int,match_df_arr)
 
-match_arr = match_id_getter()
-use_joblib(match_arr)
+if __name__ == '__main__':
+    match_arr = match_id_getter()
+    use_joblib(match_arr)
