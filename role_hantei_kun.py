@@ -11,7 +11,7 @@ api = dota2api.Initialise("C03AFEE69BA4181B7B20988EFB41E6CD")
 #4317400000
 
 def role_hantei(n):
-    role_get_sql = ("select `gold_per_min`,`player_slot` from `each_playerdata_722d` where `match_id` =%s")
+    role_get_sql = ("select `gold_per_min`,`player_slot` from `each_playerdata_722d` where `match_id` =%s order by `player_slot`")
     matchid = (n,)
     print(n)
     cnx = mysql.connector.connect(user='root', password='takuwan1', host='localhost')

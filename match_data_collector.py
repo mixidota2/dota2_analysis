@@ -11,7 +11,11 @@ def insert_data(n):
         match = API.get_match_details(match_id=n)
         players_json = json.dumps({"players":match['players']})
         picks_bans_json = json.dumps({'picks_bans':match['picks_bans']})
-        insert_query = "INSERT INTO `{}` (`matchid`,`playerdata`,`duration`,`lobby_name`,`picks_bans`,`radiant_win`) VALUES (%s,%s,%s,%s,%s,%s)".format(TABLE_WHOLEDATA)
+        insert_query = (
+                        """INSERT INTO `{}` 
+                        (`matchid`,`playerdata`,`duration`,`lobby_name`,`picks_bans`,`radiant_win`) 
+                        VALUES (%s,%s,%s,%s,%s,%s)"""
+                        .format(TABLE_WHOLEDATA))
         insert_data = (match['match_id'],players_json,match['duration'],match['lobby_name'],picks_bans_json,match['radiant_win'])
         if match['lobby_name'] == 'Ranked':
             try:
@@ -34,7 +38,7 @@ def insert_data(n):
 def use_joblib(startid,upto_number):
     Parallel(n_jobs=4,verbose=10)([delayed(insert_data)(n) for n in range(startid,startid + upto_number)])
 
-use_joblib(4878336761,300000)
+use_joblib(4878636745,10)
 
 
 
