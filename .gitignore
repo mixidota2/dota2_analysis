@@ -2,3 +2,4 @@ dota2_config.py
 .vscode/launch.json
 .vscode/settings.json
 __pycache__/dota2_config.cpython-37.pyc
+dota2_analysis.code-workspace
