@@ -4,3 +4,4 @@ dota2_config.py
 __pycache__/dota2_config.cpython-37.pyc
 dota2_analysis.code-workspace
 testprint.py
+.gitignore.swp

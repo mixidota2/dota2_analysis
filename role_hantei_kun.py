@@ -1,20 +1,17 @@
-import dota2api
+from dota2_config import *
 import mysql.connector
 from mysql.connector import errorcode
 import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 
-api = dota2api.Initialise("C03AFEE69BA4181B7B20988EFB41E6CD")
-
-
-#4317400000
+api = API
 
 def role_hantei(n):
-    role_get_sql = ("select `gold_per_min`,`player_slot` from `each_playerdata_722d` where `match_id` =%s order by `player_slot`")
+    role_get_sql = (f"select `gold_per_min`,`player_slot` from `{TABLE_EACH_PLAYERDATA}` where `match_id` = %s order by `player_slot`")
     matchid = (n,)
     print(n)
-    cnx = mysql.connector.connect(user='root', password='takuwan1', host='localhost')
+    cnx = mysql.connector.connect(user=USER, password=PASSWORD, host=HOST)
     cursor = cnx.cursor(buffered=True)
     cursor.execute("USE dota2_match_datalake")
     cursor.execute(role_get_sql, matchid)
@@ -38,7 +35,7 @@ def role_hantei(n):
         role_list_dire = list(map(lambda x:x+1,role_list_dire))
         print(role_list_radiant)
         print(role_list_dire)
-        role_insert_query = ("UPDATE `each_playerdata_722d` SET `role`=%s WHERE `match_id`=%s AND `player_slot`=%s")
+        role_insert_query = (f"UPDATE `{TABLE_EACH_PLAYERDATA}` SET `role`=%s WHERE `match_id`=%s AND `player_slot`=%s")
         role_insert_values = []
         for i, role in zip(range(0,5),role_list_radiant):
             each_tuple = (role,n,i)
@@ -62,8 +59,8 @@ def role_hantei(n):
 def use_joblib(match_array):
     Parallel(n_jobs=4,verbose=10)([delayed(role_hantei)(n) for n in match_array])
 
-conn = mysql.connector.connect(user='root', password='takuwan1', host='localhost',database='dota2_match_datalake')
-get_matchid_sql = ("SELECT `matchid` from `wholedata_722d`")
+conn = mysql.connector.connect(user=USER, password=PASSWORD, host=HOST,database=DATABASE)
+get_matchid_sql = (f"SELECT `matchid` from `{TABLE_WHOLEDATA}`")
 match_df = pd.read_sql(get_matchid_sql,conn)
 match_arr = np.array(match_df['matchid'],dtype=np.int64)
 match_arr = map(int,match_arr)
