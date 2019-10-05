@@ -6,3 +6,5 @@ dota2_analysis.code-workspace
 testprint.py
 .gitignore.swp
 luigi.cfg
+luigiconfig.py
+__pycache__/luigiconfig.cpython-37.pyc
